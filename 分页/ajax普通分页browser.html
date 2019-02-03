@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        li {
+            list-style: none;
+        }
+        body {
+            background: #eee;
+        }
+        .wrapper {
+            background: #fff;
+            width: 970px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        li {
+            margin:20px 0;
+            border-bottom:1px solid #eee;
+            padding-bottom:20px;
+
+        }
+
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <h1>博客列表 <h2>
+        <script>document.write(new Date().toLocaleString())</script></h2></h1>
+    <ul>
+
+
+
+    </ul>
+</div>
+<div class="footer" style=" width: 500px; margin:auto; ">
+    <p>总共有<span id="total"></span>条记录,
+        每页显示 <span id="pageSize"></span>条,
+        当前是  <span id="page"></span>/<span id="size"></span>页,
+        <a href="" id="prev">上一页</a>
+        <a href="" id="next">下一页</a>
+
+    </p>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+     let page = 1;
+     function getBlog(page) {
+         $.ajax({
+             url:'/blog',
+             data:{page},
+             dataType:'json',
+             type:'get',
+             success:function(res) {
+                let str = '';
+                res.blogs.forEach(function(item) {
+                    str += ` <li>
+                      <h2><a href="">${item.title}</a></h2>
+                          <p class="time">${item.time}</p>
+                          <p class="summary">${item.summary}</p>
+                     </li>`
+                })
+                 $('ul').html(str);
+                $('#total').text(res.total);
+                $("#pageSize").text(res.pageSize);
+                $("#size").text(res.size);
+                $("#page").text(res.page);
+             },
+             error:function(err) {
+                 console.log(err);
+             }
+         })
+     }
+     getBlog(page);
+
+     $("#prev").click(function(e) {
+         e.preventDefault();
+          if(page > 1) {
+              getBlog(--page);
+          }
+
+     })
+
+
+     $("#next").click(function(e) {
+         //下面一句只能写在里面，因为异步
+         let size = $('#size').text();
+         if(page <= size) {
+             getBlog(++page);
+         }
+         e.preventDefault();
+     })
+</script>
+</body>
+</html>

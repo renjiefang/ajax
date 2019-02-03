@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<input type="search" name="" id="keyInput">
+<button>搜索一下</button>
+ <ul id="list">
+
+ </ul>
+<script>
+     $(function() {
+         $('#keyInput').on('keyup', function() {
+             let key = $(this).val().trim();
+             if(!key){
+                $('#list').empty();
+                return;
+             }
+             $.ajax({
+                 url: '/search',
+                 type: 'get',
+                 data: {key},
+                 dataType: 'json',
+                 success:function(res) {
+                     console.log(res);
+                     let str ='';
+                     res.forEach( item => {
+                         str +=`<li>${item.keyword}</li>`
+                     })
+                     $('#list').html(str);
+                 },
+                 error:function(err) {
+                     console.log(err);
+                 }
+             })
+         })
+     })
+</script>
+</body>
+</html>

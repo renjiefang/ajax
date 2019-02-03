@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<form action="" method="post">
+    <label >用户名:
+        <input type="text" name="username" id="username">
+        <span id="msg"></span>
+    </label>
+    <br>
+    <label >密码:
+        <input type="text" name="password">
+    </label>
+    <br>
+    <label >重填密码:
+        <input type="text" name="repassword">
+    </label>
+    <br>
+    <input type="submit" value="注册">
+</form>
+<script>
+     $(function(){
+          $("#username").on('blur', function() {
+              let username = $(this).val();
+              $.post('/post/check1', {username}, function(res){
+                      $("#msg").html(res.msg);
+
+              },'json')
+          })
+
+
+     })
+</script>
+</body>
+</html>

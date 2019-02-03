@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+     <button>jsonp跨域</button>
+     <script>
+         $(function() {
+             let url = 'http://v.juhe.cn/sms/send';
+             $('button').on('click', function() {
+                 $.ajax({
+                     url: url,
+                     type: 'get',
+                     dataType: 'jsonp',
+                     success: function(res) {
+                        console.log(res);
+                     }
+
+                     })
+             })
+         })
+
+
+     </script>
+</body>
+</html>

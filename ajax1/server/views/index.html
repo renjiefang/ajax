@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="" method="post">
+    <label >用户名:
+        <input type="text" name="username" id="username">
+         <span id="msg"></span>
+    </label>
+    <br>
+    <label >密码:
+        <input type="text" name="password">
+    </label>
+    <br>
+    <label >重填密码:
+        <input type="text" name="repassword">
+    </label>
+    <br>
+    <input type="submit" value="注册">
+</form>
+<script>
+    //只要写了请求便会在network中显示出来
+    var user = document.querySelector("#username");
+    var msg = document.querySelector("#msg");
+    user.onblur = function () {
+        let username = encodeURIComponent(this.value);
+        var xhr = new XMLHttpRequest();
+        //'get'大小写都可以，对于get请求通过xhr.send(请求正文)来发送，null表示正文为空，也可以不写
+        //对于get还要注意一些特殊符号  1.中文(ie有问题) 2. = & 本身是查询字符串的符号，会有干扰,所以一定要编码
+        //post请求，使用setRequestHeader()把传递的数据组织为xml格式send(请求正文)，特殊符号需要编码，
+        //post请求同时也可以使用查询字符串来传递数据
+
+        //  xhr.open('get', '/check?username=' + username);
+          xhr.open('post','/check');
+        //必须在open方法后进行设置
+          xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                msg.innerHTML = xhr.responseText;
+            }
+        }
+      //  xhr.send(null);
+        //必须加等于号，不然为undefined
+           xhr.send("username="+username);
+     }
+</script>
+</body>
+</html>

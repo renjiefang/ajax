@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        li {
+            list-style: none;
+        }
+        body {
+            background: #eee;
+        }
+        .wrapper {
+            background: #fff;
+            width: 970px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        li {
+            margin:20px 0;
+            border-bottom:1px solid #eee;
+            padding-bottom:20px;
+
+        }
+
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <h1>博客列表</h1>
+    <ul>
+        <% for (var i = 0; i < data.length; i++) { %>
+            <li>
+                <h2><a href=""><%= data[i].title %></a></h2>
+                <p class="time"><%= data[i].time %></p>
+                <p class="summary"><%= data[i].summary %></p>
+            </li>
+        <% } %>
+    </ul>
+</div>
+ <div class="footer" style=" width: 500px; margin:auto; ">
+     <p>总共有<%= total%>条记录,每页显示<%=pageSize%>条,当前是<%=page%>/<%=size%>页,
+         <% if( page == 1) {%>
+             上一页
+         <%} else {%>
+         <a href="?page=<%=page-1%>">上一页</a>
+          <%}%>
+
+ <!--从服务器端传到浏览器端的是字符串-->
+
+         <% if( page == size) {%>
+             下一页
+         <%} else {%>
+         <a href="?page=<%=+page+1%>">下一页</a>
+         <%}%>
+
+     </p>
+ </div>
+</body>
+</html>

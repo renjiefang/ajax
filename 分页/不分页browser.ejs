@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        li {
+            list-style: none;
+        }
+        body {
+            background: #eee;
+        }
+        .wrapper {
+            background: #fff;
+            width: 970px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        li {
+            margin:20px 0;
+            border-bottom:1px solid #eee;
+            padding-bottom:20px;
+
+        }
+
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <h1>博客列表</h1>
+    <ul>
+        <% for (var i = 0; i < data.length; i++) { %>
+            <li>
+                <h2><a href=""><%= data[i].title %></a></h2>
+                <p class="time"><%= data[i].time %></p>
+                <p class="summary"><%= data[i].summary %></p>
+            </li>
+        <% } %>
+    </ul>
+</div>
+</body>
+</html>

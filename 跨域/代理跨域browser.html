@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<button>获取数据</button>
+<script>
+    $(function() {
+        $('button').on('click', function() {
+             let url = 'http://v.juhe.cn/sms/send';
+            $.ajax({
+                url: '/proxy',
+                type: 'get',
+                data: {url},
+                dataType: 'json',
+                success: function(res) {
+                    console.log(res);
+                }
+
+            })
+        })
+
+    })
+
+
+</script>
+</body>
+</html>

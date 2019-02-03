@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<label >省:</label>
+<select id="province">
+    <option value="--省份--"></option>
+</select>
+<label >市:</label>
+<select id="city">
+    <option value="--市区--"></option>
+</select>
+<label >县:</label>
+<select id="country">
+    <option value="--区县--"></option>
+</select>
+<script>
+       var province=document.querySelector("#province");
+       var  city=document.querySelector("#city");
+       var  country=document.querySelector("#country");
+
+       var xhr=new XMLHttpRequest();
+
+        xhr.open('get','/province');
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                let res =  xhr.responseText;
+                 let province1=JSON.parse(res);
+                 let  str='<option value="省份">--省份--</option>';
+                 province1.forEach( item => {
+                      str += `<option value="${item}">${item}</option>`;
+                 })
+                province.innerHTML = str;
+            }
+        }
+        xhr.send(null);
+
+        province.onchange = function() {
+            //注意?前面没有/,     province= 不是province =
+            xhr.open('get', '/city?province='+this.value);
+             xhr.onreadystatechange = function() {
+                 if(xhr.readyState == 4 && xhr.status == 200) {
+                     let res = xhr.responseText;
+                      console.log(res);
+                     let cities = JSON.parse(res);
+                     console.log(cities);
+                     let  str='<option value="市">--市--</option>';
+                     cities.forEach( item => {
+                         str += `<option value="${item}">${item}</option>`;
+                     })
+                     city.innerHTML = str;
+
+                 }
+             }
+            xhr.send(null);
+        }
+
+        city.onchange=function(){
+            xhr.open('get', '/country?city='+this.value);
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    let res = xhr.responseText;
+                    console.log(res);
+                    let countries = JSON.parse(res);
+                    console.log(countries);
+                    let  str='<option value="县">--县--</option>';
+                    countries.forEach( item => {
+                        str += `<option value="${item}">${item}</option>`;
+                    })
+                    country.innerHTML = str;
+
+                }
+            }
+            xhr.send(null);
+        }
+
+</script>
+</body>
+</html>
